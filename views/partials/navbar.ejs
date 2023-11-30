@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/" style="padding-left: 5rem">
+    <!-- Replace the 'your-logo.png' with the path to your logo image -->
+    Task Manager
+  </a>
+
+  <div
+    class="collapse navbar-collapse justify-content-end"
+    id="navbarNav"
+    style="position: absolute; top: 0; left: 0; height: 100%; width: 100%"
+  >
+    <ul class="navbar-nav" style="padding-right: 5rem">
+      <% if(user){ %>
+      <li class="nav-item">
+        <div class="nav-link" style="color: black">
+          Welcome, <%= user.email %>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+
+      <% } else{%>
+      <li class="nav-item">
+        <a class="nav-link" href="/login">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/signup">Sign Up</a>
+      </li>
+
+      <% } %>
+    </ul>
+  </div>
+</nav>

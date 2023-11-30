@@ -1,0 +1,90 @@
+<%- include('partials/header') -%> <%- include('partials/navbar') -%>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title text-center">Sign Up</h2>
+          <form>
+            <small id="credentials-error" class="form-text text-muted"></small>
+            <div class="form-group">
+              <label for="inputEmail1">Email address</label>
+              <input
+                type="email"
+                name="email"
+                class="form-control"
+                id="inputEmail1"
+                aria-describedby="emailHelp"
+                placeholder="Enter email"
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputPassword1">Password</label>
+              <input
+                type="password"
+                name="password"
+                class="form-control"
+                id="inputPassword1"
+                placeholder="Password"
+              />
+            </div>
+            <!-- <div class="form-group form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="exampleCheck1"
+              />
+              <label class="form-check-label" for="exampleCheck1"
+                >Remember me</label
+              >
+            </div> -->
+            <div style="height: 100%; width: 100%; text-align: center">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                style="padding: 0.5em 3em; margin: 1rem auto"
+                id="submitBtn"
+              >
+                Sign up
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const form = document.querySelector("form");
+  const credentialsError = document.querySelector("#credentials-error");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    credentialsError.textContent = "";
+    const email = form.email.value;
+    const password = form.password.value;
+
+    try {
+      const res = await fetch("/api/v1/users/auth/signup", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+      console.log(data);
+      if (data.msg) {
+        credentialsError.textContent = data.msg;
+      }
+      if (data.user) {
+        location.assign("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
+</script>
+
+<%- include('partials/footer') -%>
